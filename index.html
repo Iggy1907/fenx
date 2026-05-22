@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FEN-X Frizerski Salon</title>
+  <link rel="stylesheet" href="fenx_styles.css" />
+</head>
+<body>
+
+<header>
+  <div class="logo-wrap">
+    <div>
+      <span class="logo-main">FEN-X</span>
+    </div>
+  </div>
+  <nav>
+    <a href="fenx_admin.php" style="color:#9ca3af;text-decoration:none;font-size:0.9rem;text-transform:uppercase;letter-spacing:0.1em;">Admin</a>
+  </nav>
+</header>
+
+<main>
+
+  <section style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-bottom:5rem;">
+    <div>
+      <div class="gallery-grid">
+        <div class="gallery-main" onclick="customOpenLightbox(galleryImages, 0)">
+          <img src="slika1.jpg" alt="FEN-X Salon" />
+        </div>
+        <div class="gallery-thumb" onclick="customOpenLightbox(galleryImages, 1)">
+          <img src="slika2.jpg" alt="Salon" />
+        </div>
+        <div class="gallery-thumb gallery-blur-cell" onclick="customOpenLightbox(galleryImages, 2)">
+          <img src="slika3.jpg" alt="Salon" />
+          <div class="gallery-overlay-count"><span>+8</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h2>OPIS FRIZERJA</h2>
+      <blockquote style="background:#f9fafb;padding:1.5rem;margin:1rem 0 2rem;border-left:4px solid #dc2626;">
+        "Dobrodošli v frizerskem salonu FEN-X. Naša ekipa s strastjo in profesionalnostjo skrbi za vaš videz.
+        Vsaka stranka je posebna — posvetimo ji čas, ki ga zasluži."
+      </blockquote>
+      <h2>FRIZERSTVO</h2>
+      <p style="color:#4b5563;line-height:1.7;">
+        Frizerstvo Fen-X ponuja celovite storitve od leta 2018. Naš cilj je združiti profesionalnost,
+        ustvarjalnost in osebni pristop k vsaki stranki.
+      </p>
+    </div>
+  </section>
+
+  <h2 style="font-size:3rem;margin-bottom:1.5rem;">REZERVACIJA TERMINA</h2>
+  <div class="booking-section">
+    <div class="booking-grid">
+
+      <div>
+        <div class="calendar-header">
+          <button class="calendar-nav" onclick="prevMonth()">❮</button>
+          <h3 id="cal-header" style="font-size:1.5rem;"></h3>
+          <button class="calendar-nav" onclick="nextMonth()">❯</button>
+        </div>
+
+        <div class="calendar-grid" style="margin-bottom:0.5rem;">
+          <div style="font-weight:700;font-size:0.75rem;text-align:center;padding:0.25rem;">Po</div>
+          <div style="font-weight:700;font-size:0.75rem;text-align:center;padding:0.25rem;">To</div>
+          <div style="font-weight:700;font-size:0.75rem;text-align:center;padding:0.25rem;">Sr</div>
+          <div style="font-weight:700;font-size:0.75rem;text-align:center;padding:0.25rem;">Čt</div>
+          <div style="font-weight:700;font-size:0.75rem;text-align:center;padding:0.25rem;">Pe</div>
+          <div style="font-weight:700;font-size:0.75rem;text-align:center;padding:0.25rem;">So</div>
+          <div style="font-weight:700;font-size:0.75rem;text-align:center;padding:0.25rem;">Ne</div>
+        </div>
+        <div id="cal-grid" class="calendar-grid"></div>
+
+        <h3 style="margin-top:1.5rem;margin-bottom:0.75rem;font-size:1.2rem;">IZBERI URO:</h3>
+        <div id="time-slots" class="time-slots"></div>
+      </div>
+
+      <form id="booking-form">
+        <div class="form-group">
+          <label class="form-label">IME IN PRIIMEK:</label>
+          <input class="form-input" type="text" name="ime" placeholder="NPR. JANEZ NOVAK" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">SPOL:</label>
+          <select class="form-select" name="spol" required>
+            <option value="">-- Izberite --</option>
+            <option value="moški">Moški</option>
+            <option value="ženski">Ženski</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">STORITEV:</label>
+          <select class="form-select" name="storitev" required>
+            <option value="">-- Izberite --</option>
+            <option value="Striženje las">Striženje las</option>
+            <option value="Brivanje">Brivanje</option>
+            <option value="Barvanje las">Barvanje las</option>
+            <option value="Frizura + brivanje">Frizura + brivanje</option>
+            <option value="Otroška frizura">Otroška frizura</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">OPOMBA:</label>
+          <textarea class="form-textarea" name="opomba" rows="3" placeholder="NPR. LOW TAPER FADE"></textarea>
+        </div>
+        <button class="btn-primary" type="submit">POTRDI REZERVACIJO</button>
+      </form>
+
+    </div>
+  </div>
+
+  <div class="bottom-grid">
+    <div>
+      <h2 style="font-size:3rem;margin-bottom:1.5rem;">FRIZURE:</h2>
+      <div class="gallery-grid">
+        <div class="gallery-main" onclick="customOpenLightbox(frizureImages, 0)">
+          <img src="frizura1.jpg" alt="Frizura 1" />
+        </div>
+        <div class="gallery-thumb" onclick="customOpenLightbox(frizureImages, 1)">
+          <img src="frizura2.jpg" alt="Frizura 2" />
+        </div>
+        <div class="gallery-thumb gallery-blur-cell" onclick="customOpenLightbox(frizureImages, 2)">
+          <img src="frizura3.jpg" alt="Frizura 3" />
+          <div class="gallery-overlay-count"><span>+10</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h2 style="font-size:3rem;margin-bottom:1.5rem;">LOKACIJA:</h2>
+      <div style="margin-bottom:2rem;">
+        <iframe class="map-frame"
+                src="https://maps.google.com/maps?q=Jane%C4%8De+1%2C+2390+Ravne+na+Koro%C5%A1kem&output=embed&z=17"
+                width="100%" height="280" style="border:2px solid #000;display:block;"
+                allowfullscreen loading="lazy">
+        </iframe>
+      </div>
+
+      <h2 style="font-size:2.5rem;margin-bottom:1rem;">DELOVNI ČAS</h2>
+      <div>
+        <div class="hours-row closed"><span class="hours-dan">Nedelja</span><span class="hours-ura">Zaprto</span></div>
+        <div class="hours-row"><span class="hours-dan">Ponedeljek</span><span class="hours-ura">8–19</span></div>
+        <div class="hours-row"><span class="hours-dan">Torek</span><span class="hours-ura">8–19</span></div>
+        <div class="hours-row"><span class="hours-dan">Sreda</span><span class="hours-ura">8–19</span></div>
+        <div class="hours-row"><span class="hours-dan">Četrtek</span><span class="hours-ura">8–19</span></div>
+        <div class="hours-row"><span class="hours-dan">Petek</span><span class="hours-ura">8–19</span></div>
+        <div class="hours-row"><span class="hours-dan">Sobota</span><span class="hours-ura">8–13</span></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer style="max-width:1200px;margin:0 auto;padding:0 2rem;">
+  <span class="footer-logo">FEN-X</span>
+  <p class="footer-copy">© 2025 Frizerski salon FEN-X. Vse pravice pridržane.</p>
+</footer>
+
+<div id="lightbox" class="lightbox-overlay" style="display:none;">
+  <button id="lb-close" class="lightbox-close">×</button>
+  <button id="lb-prev"  class="lightbox-btn prev">❮</button>
+  <img    id="lb-img"   class="lightbox-img" src="" alt="Lightbox" />
+  <button id="lb-next"  class="lightbox-btn next">❯</button>
+  <div    id="lb-dots"  class="lightbox-dots"></div>
+</div>
+
+<script>
+  const galleryImages = [
+    "slika1.jpg","slika2.jpg","slika3.jpg",
+    "slika4.jpg","slika5.jpg","slika6.jpg",
+    "slika7.jpg","slika8.jpg","slika9.jpg","slika10.jpg"
+  ];
+  const frizureImages = [
+    "frizura1.jpg","frizura2.jpg","frizura3.jpg",
+    "frizura4.jpg","frizura5.jpg","frizura6.jpg",
+    "frizura7.jpg","frizura8.jpg","frizura9.jpg","frizura10.jpg"
+  ];
+</script>
+
+<script src="fenx_booking.js"></script>
+
+<script>
+  let myLightboxImages = [];
+  let myLightboxIndex = 0;
+
+  const customOverlay = document.getElementById("lightbox");
+  const customImg = document.getElementById("lb-img");
+  const customDots = document.getElementById("lb-dots");
+
+  document.getElementById("lb-close").addEventListener("click", customCloseLightbox);
+  document.getElementById("lb-prev").addEventListener("click", () => customMoveLightbox(-1));
+  document.getElementById("lb-next").addEventListener("click", () => customMoveLightbox(1));
+
+  customOverlay.addEventListener("click", (e) => {
+    if (e.target === customOverlay) customCloseLightbox();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (customOverlay.style.display !== "flex") return;
+    if (e.key === "ArrowLeft")  customMoveLightbox(-1);
+    if (e.key === "ArrowRight") customMoveLightbox(1);
+    if (e.key === "Escape")     customCloseLightbox();
+  });
+
+  function customOpenLightbox(imgs, idx) {
+    myLightboxImages = imgs;
+    myLightboxIndex = idx;
+    customUpdateLightbox();
+    customOverlay.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  }
+
+  function customCloseLightbox() {
+    customOverlay.style.display = "none";
+    document.body.style.overflow = "";
+  }
+
+  function customMoveLightbox(dir) {
+    myLightboxIndex = (myLightboxIndex + dir + myLightboxImages.length) % myLightboxImages.length;
+    customUpdateLightbox();
+  }
+
+  function customUpdateLightbox() {
+    customImg.src = myLightboxImages[myLightboxIndex];
+    if (customDots) {
+      customDots.innerHTML = myLightboxImages
+              .map((_, i) => `<span class="dot${i === myLightboxIndex ? " active" : ""}" onclick="customMoveLightbox(${i - myLightboxIndex})"></span>`)
+              .join("");
+    }
+  }
+</script>
+</body>
+</html>

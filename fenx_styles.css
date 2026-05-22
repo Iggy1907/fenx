@@ -1,0 +1,383 @@
+/* ============================================================
+   FEN-X Frizerski Salon -- Celotni Stili
+   Pisave: Bebas Neue (naslovi), Roboto (besedilo)
+   Barve: #000 (črna), #fff (bela), #dc2626 (rdeča)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap');
+
+/* ---- Osnova ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #fff;
+  color: #111;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, .heading {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+/* ---- Header ---- */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 4rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.logo-wrap {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.logo-main {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 7rem;
+  color: #dc2626;
+  line-height: 1;
+}
+
+.logo-sub {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  color: #dc2626;
+  letter-spacing: 0.3em;
+  display: block;
+  margin-top: -0.3rem;
+}
+
+/* ---- Main container ---- */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem 6rem;
+}
+
+
+/* ============================================================
+   POPOLNOMA POENOTENE IN ZAMEGLJENE GALERIJE (Salon & Frizure)
+   ============================================================ */
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  background: #000;
+  padding: 0.75rem;
+}
+
+.gallery-main {
+  grid-column: 1 / -1;
+  height: 350px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.gallery-thumb {
+  height: 280px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+/* Povečava ob preletu z miško (samo za navadne slike) */
+.gallery-grid .gallery-main:hover img,
+.gallery-grid .gallery-thumb:hover:not(.gallery-blur-cell) img {
+  transform: scale(1.05);
+}
+
+/* Poseben razred za zadnjo zamegljeno celico (+8 in +10) */
+.gallery-blur-cell {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Močna zameglitev in zatemnitev slike v ozadju */
+.gallery-blur-cell img {
+  filter: blur(5px) brightness(0.55);
+  transform: scale(1.04); /* Skrije prozorne robove zaradi zameglitve */
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+/* Ko se z miško postavimo na zamegljeno celico */
+.gallery-blur-cell:hover img {
+  filter: blur(2px) brightness(0.45);
+  transform: scale(1.08);
+}
+
+/* Številka centrirana točno na sredino zamegljene slike */
+.gallery-overlay-count {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* Klik gre skozi na celico za odpiranje lightboxa */
+}
+
+.gallery-overlay-count span {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4rem;
+  color: #fff;
+  letter-spacing: 0.05em;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* Številka ob preletu z miško postane rdeča */
+.gallery-blur-cell:hover .gallery-overlay-count span {
+  color: #dc2626;
+  transform: scale(1.05);
+}
+
+
+/* ---- Lightbox Okno ---- */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,0.92);
+  display: none; /* Nadzorovano preko JS (flex) */
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+}
+
+.lightbox-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 1rem;
+  font-size: 2rem;
+  transition: background 0.2s;
+}
+.lightbox-btn:hover { background: rgba(220,38,38,0.6); }
+.lightbox-btn.prev { left: 1.5rem; }
+.lightbox-btn.next { right: 1.5rem; }
+
+.lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+
+.lightbox-dots {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.dot.active { background: #dc2626; }
+
+
+/* ---- Rezervacijski sistem & Obrazec ---- */
+.booking-section {
+  border: 1px solid #ddd;
+  padding: 2rem;
+  margin: 3rem 0;
+}
+
+.booking-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.calendar-nav {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.25rem 0.75rem;
+}
+.calendar-nav:hover { color: #dc2626; }
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+  text-align: center;
+}
+
+.cal-day {
+  padding: 0.5rem 0.25rem;
+  cursor: pointer;
+  border-radius: 2px;
+  font-size: 0.9rem;
+  transition: background 0.15s, color 0.15s;
+}
+.cal-day:hover:not(.disabled):not(.empty) { background: #dc2626; color: #fff; }
+.cal-day.selected { background: #000; color: #fff; }
+.cal-day.disabled { color: #ccc; cursor: default; }
+.cal-day.empty { visibility: hidden; }
+
+.time-slots {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.time-btn {
+  padding: 0.6rem 0.25rem;
+  border: 2px solid #000;
+  background: #fff;
+  cursor: pointer;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  transition: background 0.15s, color 0.15s;
+}
+.time-btn:hover:not(.taken) { background: #dc2626; border-color: #dc2626; color: #fff; }
+.time-btn.selected { background: #000; color: #fff; border-color: #000; }
+.time-btn.taken {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: default;
+  border-color: #e5e7eb;
+  text-decoration: line-through;
+}
+
+.form-group { margin-bottom: 1.5rem; }
+
+.form-label {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  border: 2px solid #000;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: #dc2626; }
+
+.btn-primary {
+  width: 100%;
+  background: #000;
+  color: #fff;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  padding: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-primary:hover { background: #dc2626; }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+
+/* ---- Spodnji razpored & Lokacija ---- */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
+.map-frame { border: 2px solid #000; display: block; }
+
+
+/* ---- Delovni čas ---- */
+.hours-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+.hours-row:last-child { border-bottom: none; }
+.hours-dan { font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; }
+.hours-ura { font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; }
+.hours-row.closed .hours-dan, .hours-row.closed .hours-ura { color: #d1d5db; }
+
+
+/* ---- Footer ---- */
+footer {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: #dc2626;
+}
+
+.footer-copy {
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+
+/* ---- Prilagodljivost za mobilne naprave ---- */
+@media (max-width: 768px) {
+  header { padding: 1.5rem; }
+  .logo-main { font-size: 4rem; }
+  .booking-grid, .bottom-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .time-slots { grid-template-columns: repeat(3, 1fr); }
+  .gallery-main { height: 250px; }
+  .gallery-thumb { height: 180px; }
+  .gallery-overlay-count span { font-size: 3rem; }
+}
